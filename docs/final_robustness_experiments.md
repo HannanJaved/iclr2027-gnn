@@ -1,3 +1,5 @@
+> Note: cluster Slurm launch scripts are omitted from this anonymous > release. The CLI entrypoints below remain the source of truth for > reproducing analyses locally.
+
 # Final robustness experiments
 
 These jobs address three remaining sensitivity questions without changing the formal
@@ -8,7 +10,7 @@ train-loss-defined Rashomon sets.
 From the project root, submit the complete Romeo batch with:
 
 ```bash
-bash scripts/slurm/submit_final_robustness_romeo.sh
+bash scripts/ [omitted from anonymous release]/submit_final_robustness_romeo.sh
 ```
 
 The helper submits independent set-size and fairness jobs and reruns the existing GCN rewiring
@@ -41,4 +43,4 @@ models available to the deployment selector but does not claim equal training co
 ordinary GNN, FairGNN, and FairSIN procedures.
 
 After inspecting and incorporating the results, commit the code and manuscript changes, ensure
-the worktree is clean, and submit `scripts/slurm/release_manifest_romeo_cpu.sbatch`.
+the worktree is clean, and submit `scripts/ [omitted from anonymous release]/release_manifest_romeo_cpu.sbatch`.

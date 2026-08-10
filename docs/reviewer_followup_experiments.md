@@ -1,3 +1,5 @@
+> Note: cluster Slurm launch scripts are omitted from this anonymous > release. The CLI entrypoints below remain the source of truth for > reproducing analyses locally.
+
 # Reviewer follow-up experiments
 
 This note packages the highest-priority reviewer requests against the current
@@ -31,16 +33,16 @@ On **alpha** — one GPU job runs all 2250 trainings internally:
 
 ```bash
 cd ${PROJECT_DIR}
-bash scripts/slurm/submit_cf_retrain_alpha.sh
+bash scripts/ [omitted from anonymous release]/submit_cf_retrain_alpha.sh
 # equivalent:
-# sbatch scripts/slurm/cf_retrain_seed_alpha_gpu.sbatch
+# sbatch scripts/ [omitted from anonymous release]/cf_retrain_seed_alpha_gpu.sbatch
 ```
 
 The job requests 7 days / 1 GPU and skips tasks that already have metrics, so
 requeues or partial resubmits resume cleanly. Optional range:
 
 ```bash
-CF_RETRAIN_START_TASK=0 CF_RETRAIN_END_TASK=749 sbatch scripts/slurm/cf_retrain_seed_alpha_gpu.sbatch
+CF_RETRAIN_START_TASK=0 CF_RETRAIN_END_TASK=749 sbatch scripts/ [omitted from anonymous release]/cf_retrain_seed_alpha_gpu.sbatch
 ```
 
 (The old 2250-task array script remains as
@@ -50,9 +52,9 @@ After training finishes, on **Romeo** (analysis only):
 
 ```bash
 cd ${PROJECT_DIR}
-bash scripts/slurm/submit_cf_retrain_analyze_romeo.sh
+bash scripts/ [omitted from anonymous release]/submit_cf_retrain_analyze_romeo.sh
 # equivalent:
-# sbatch scripts/slurm/cf_retrain_analyze_romeo_cpu.sbatch
+# sbatch scripts/ [omitted from anonymous release]/cf_retrain_analyze_romeo_cpu.sbatch
 ```
 
 Smoke one decoded task locally before the full array:
@@ -104,7 +106,7 @@ export PYTHONPATH="$PWD/src:${PYTHONPATH:-}"
 On Romeo:
 
 ```bash
-sbatch scripts/slurm/reviewer_reanalysis_romeo_cpu.sbatch
+sbatch scripts/ [omitted from anonymous release]/reviewer_reanalysis_romeo_cpu.sbatch
 ```
 
 This writes:
@@ -164,7 +166,7 @@ Outputs:
 Optional node-level \(\Delta D_i\) quantiles (requires rematerializing node tables):
 
 ```bash
-sbatch scripts/slurm/materialize_rewiring_node_deltas_romeo_cpu_array.sbatch
+sbatch scripts/ [omitted from anonymous release]/materialize_rewiring_node_deltas_romeo_cpu_array.sbatch
 # then
 python -m gnn_rashomon.cli.build_rewiring_effect_sizes \
   --realizations-csv outputs/repeated_rewiring/repeated_rewiring_realizations.csv \
