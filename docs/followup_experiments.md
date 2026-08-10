@@ -2,7 +2,7 @@
 
 # Reviewer follow-up experiments
 
-This note packages the highest-priority reviewer requests against the current
+This note packages the highest-priority follow-up analyses against the current
 `gnn-rashomon` codebase. **No jobs were submitted from this session.**
 
 ## Experiment #1 — Counterfactual graph retraining (GPU)
@@ -106,7 +106,7 @@ export PYTHONPATH="$PWD/src:${PYTHONPATH:-}"
 On Romeo:
 
 ```bash
-sbatch scripts/ [omitted from anonymous release]/reviewer_reanalysis_romeo_cpu.sbatch
+sbatch scripts/ [omitted from anonymous release]/reanalysis_romeo_cpu.sbatch
 ```
 
 This writes:
