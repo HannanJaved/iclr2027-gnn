@@ -1,0 +1,4 @@
+architecture: topology_only
+hidden_channels: 16
+dropout: 0.5
+input_representation: constant

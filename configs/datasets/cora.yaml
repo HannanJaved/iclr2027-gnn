@@ -1,0 +1,4 @@
+name: cora
+loader: planetoid
+root: data/Planetoid
+split: public

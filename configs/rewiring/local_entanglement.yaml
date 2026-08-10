@@ -1,0 +1,4 @@
+mode: local_entanglement
+tau: 0.10
+delta_e: 0.02
+delta_x: 0.02

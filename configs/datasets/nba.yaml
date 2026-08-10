@@ -1,0 +1,19 @@
+name: nba
+loader: nba
+root: data/NBA
+csv_path: ../FairGNN/dataset/NBA/nba.csv
+relationship_path: ../FairGNN/dataset/NBA/nba_relationship.txt
+split: public
+split_seed: 20
+label_number: 100
+val_fraction_labeled: 0.25
+use_cache: true
+sensitive_attributes:
+  - country
+label: SALARY
+positive_label: 1
+include_sensitive_feature: false
+feature_normalization: minmax
+graph_construction: provided_twitter_relationship_graph
+source: fairgnn_nba
+source_url: https://www.kaggle.com/datasets/noahgift/social-power-nba

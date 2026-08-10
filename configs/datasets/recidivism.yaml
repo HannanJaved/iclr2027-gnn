@@ -1,0 +1,21 @@
+name: recidivism
+loader: recidivism
+root: data/Recidivism
+csv_path: data/Recidivism/compas-scores-two-years.csv
+split: deterministic
+split_seed: 0
+train_fraction: 0.6
+val_fraction: 0.2
+k_neighbors: 10
+max_nodes: 0
+use_cache: true
+sensitive_attributes:
+  - race
+label: two_year_recid
+positive_label: 1
+race_groups:
+  - Caucasian
+  - African-American
+include_sensitive_feature: false
+graph_construction: cosine_knn_on_standardized_one_hot_features
+source_url: https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv

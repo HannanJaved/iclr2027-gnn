@@ -1,0 +1,4 @@
+architecture: gat
+hidden_channels: 16
+dropout: 0.5
+heads: 4

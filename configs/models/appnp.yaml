@@ -1,0 +1,5 @@
+architecture: appnp
+hidden_channels: 64
+dropout: 0.5
+k: 10
+alpha: 0.1

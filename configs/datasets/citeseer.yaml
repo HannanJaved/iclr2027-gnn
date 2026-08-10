@@ -1,0 +1,4 @@
+name: citeseer
+loader: planetoid
+root: data/Planetoid
+split: public

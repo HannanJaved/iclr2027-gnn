@@ -1,0 +1,3 @@
+architecture: graphsage
+hidden_channels: 16
+dropout: 0.5

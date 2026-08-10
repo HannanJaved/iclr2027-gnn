@@ -1,0 +1,7 @@
+name: ogbn_arxiv
+loader: ogb
+root: data/OGB
+split: official_time
+source: ogbn-arxiv
+to_undirected: true
+normalize_features: false

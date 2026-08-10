@@ -1,0 +1,20 @@
+name: german_credit
+loader: german_credit
+root: data/GermanCredit
+data_path: data/GermanCredit/german.data
+split: deterministic
+split_seed: 0
+train_fraction: 0.6
+val_fraction: 0.2
+k_neighbors: 10
+max_nodes: 0
+use_cache: true
+sensitive_attributes:
+  - sex
+  - age_ge_threshold
+label: credit_label
+positive_label: 1
+age_threshold: 25
+include_sensitive_feature: false
+graph_construction: cosine_knn_on_standardized_one_hot_features
+source_url: https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data

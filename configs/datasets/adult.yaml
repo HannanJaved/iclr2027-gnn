@@ -1,0 +1,17 @@
+name: adult
+loader: adult
+root: data/Adult
+source: local
+csv_path: data/Adult/adult.csv
+split: deterministic
+split_seed: 0
+train_fraction: 0.6
+val_fraction: 0.2
+k_neighbors: 10
+max_nodes: 5000
+use_cache: true
+include_sensitive_feature: false
+sensitive_attributes:
+  - sex
+label: income
+graph_construction: cosine_knn_on_standardized_one_hot_features

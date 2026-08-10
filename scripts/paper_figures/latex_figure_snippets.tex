@@ -1,0 +1,60 @@
+% Optional include snippets for rashomon.tex
+% Figures live at: gnn-rashomon/outputs/paper_figures/
+% Rebuild with:
+%   .venv/bin/python scripts/paper_figures/generate_paper_figures.py
+
+% \usepackage{graphicx}
+% \graphicspath{{gnn-rashomon/outputs/paper_figures/}}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig1_structural_correlates.pdf}
+  \caption{Structural correlates of node-level probability diameter on citation-graph GCN seed sets.
+  (A) Spearman associations with local homophily, neighborhood label entropy, and degree.
+  (B) Cora node cloud with homophily-decile means $\pm$ IQR.}
+  \label{fig:structural}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.72\linewidth]{fig2_rewiring_dose_response.pdf}
+  \caption{Fixed-ensemble random rewiring dose response for mean probability diameter
+  (20 independently seeded graphs per point; bootstrap 95\% intervals).
+  PubMed GAT uses the canonical normalized-feature retrain.}
+  \label{fig:rewiring-dose}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.78\linewidth]{fig3_local_matched_effects.pdf}
+  \caption{Matched local-entanglement treatment-minus-control effects on probability diameter.
+  Annotations report the fraction of realizations with a positive effect.}
+  \label{fig:local-matched}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig4_explanation_stability.pdf}
+  \caption{Explanation stability after controlling for degree, confidence, and correctness.
+  (A) Community-clustered $t$-statistics for probability diameter versus degree under GNNExplainer.
+  (B) Cora GCN node-level Jaccard versus diameter, colored by degree.}
+  \label{fig:xai}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig5_nba_fairness_pareto.pdf}
+  \caption{NBA deployment choices from the GCN seed Rashomon set.
+  (A) Validation accuracy versus demographic-parity gap with FairGNN and FairSIN baselines.
+  (B) Accuracy win rates after downsampling the retained pool to five candidates.}
+  \label{fig:nba-fairness}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.92\linewidth]{fig6_validation_sensitivity.pdf}
+  \caption{Node disagreement under train-loss Rashomon membership versus additional
+  validation-accuracy constraints (within $0.05$ and $0.02$ of the best validation accuracy).
+  Annotations give retained counts at the $0.02$ threshold.}
+  \label{fig:val-sensitivity}
+\end{figure}

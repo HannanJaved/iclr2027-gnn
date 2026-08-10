@@ -1,0 +1,7 @@
+name: pokec
+loader: pokec
+root: data/Pokec
+split: deterministic
+sensitive_attributes:
+  - gender
+missing_sensitive_policy: encode_as_minus_one
