@@ -4,7 +4,7 @@
 #   bash scripts/slurm/submit_cf_retrain_analyze_romeo.sh
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 cd "${PROJECT_DIR}"
 
 train_job=$(sbatch --parsable scripts/slurm/cf_retrain_seed_alpha_gpu.sbatch)

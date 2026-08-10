@@ -20,7 +20,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 export PYTHONUNBUFFERED=1
 export PYTHONPATH="${PROJECT_DIR}/src:${PYTHONPATH:-}"
 export CUDA_VISIBLE_DEVICES=""

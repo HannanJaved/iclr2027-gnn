@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 ADULT_ROOT="${ADULT_ROOT:?Export ADULT_ROOT from the corrected Adult pipeline}"
 OUTPUT_PATH="${OUTPUT_PATH:-${ADULT_ROOT}/metadata/adult_corrected_slurm_accounting.tsv}"
 JOB_IDS_PATH="${JOB_IDS_PATH:-${ADULT_ROOT}/metadata/adult_corrected_slurm_job_ids.txt}"

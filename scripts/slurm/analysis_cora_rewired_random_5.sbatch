@@ -16,7 +16,7 @@ export PYTHONUNBUFFERED=1
 
 module load CUDA
 # Optional: source your local cache/env setup here
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 GRAPH_PATH="${PROJECT_DIR}/outputs/graphs/cora-random-0p05-seed0.pt"
 cd "${PROJECT_DIR}"
 source "${PROJECT_DIR}/.venv/bin/activate"

@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 MANIFEST_PATH="${MANIFEST_PATH:-outputs/metadata/release_manifest.json}"
 
 if [[ -z "${ADULT_ROOT:-}" ]]; then

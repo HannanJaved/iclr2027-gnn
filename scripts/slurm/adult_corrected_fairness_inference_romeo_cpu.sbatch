@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 OUTPUT_ROOT="${OUTPUT_ROOT:?Export OUTPUT_ROOT from the corrected Adult pipeline}"
 PERMUTATIONS="${PERMUTATIONS:-10000}"
 SEED="${SEED:-20260715}"

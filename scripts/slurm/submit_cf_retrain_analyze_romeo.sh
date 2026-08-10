@@ -4,7 +4,7 @@
 # outputs/counterfactual_retraining/metrics/*.json
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 cd "${PROJECT_DIR}"
 
 if [[ ! -d outputs/counterfactual_retraining/metrics ]]; then

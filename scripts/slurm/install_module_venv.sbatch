@@ -17,7 +17,7 @@ module purge
 module load release/24.10 GCC/13.2.0 OpenMPI/4.1.6 PyTorch/2.3.0
 
 # Optional: source your local cache/env setup here
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 cd "${PROJECT_DIR}"
 
 python -m venv --system-site-packages "${PROJECT_DIR}/.venv-module"

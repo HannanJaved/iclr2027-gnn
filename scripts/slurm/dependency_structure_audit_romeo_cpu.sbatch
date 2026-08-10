@@ -11,7 +11,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 ADULT_ROOT="${ADULT_ROOT:-${PROJECT_DIR}/outputs/release/adult_corrected_20260715_124823}"
 
 export PYTHONUNBUFFERED=1

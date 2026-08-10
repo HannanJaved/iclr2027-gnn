@@ -14,7 +14,7 @@ set -euo pipefail
 : "${REFERENCE_ROOT:?Export REFERENCE_ROOT as the archived focal-artifact tree}"
 : "${CANDIDATE_ROOT:?Export CANDIDATE_ROOT as the independently regenerated tree}"
 
-PROJECT_DIR=${PROJECT_DIR}
+PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 REPORT_PATH="${REPORT_PATH:-${PROJECT_DIR}/outputs/metadata/canonical_environment_equivalence.json}"
 
 [[ -d "${REFERENCE_ROOT}" ]] || { echo "Missing REFERENCE_ROOT: ${REFERENCE_ROOT}" >&2; exit 2; }
