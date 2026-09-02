@@ -236,9 +236,10 @@ def fig2_rewiring_dose_response(root: Path, output_dir: Path, dpi: int) -> None:
     out.to_csv(output_dir / "fig2_rewiring_dose_response.csv", index=False)
 
     # Audited: random 0.01 keeps most models near-optimal; random 0.25 yields
-    # K_δ(G')=0 on every collection. Shade the strong-perturbation side of the
-    # curve (matching the appendix relative/absolute dose figure).
-    invalid_from = 0.05
+    # K_δ(G')=0 on every collection (Appendix Table accuracy_under_rewiring).
+    # Intermediate strengths 0.05 and 0.10 report ΔD but were not accuracy-audited,
+    # so do not shade them as invalid.
+    invalid_from = 0.25
 
     fig, ax = plt.subplots(figsize=(4.8, 3.4))
     xmax = float(out["strength"].max()) + 0.02
@@ -248,7 +249,7 @@ def fig2_rewiring_dose_response(root: Path, output_dir: Path, dpi: int) -> None:
         color="#E69F00",
         alpha=0.15,
         zorder=0,
-        label=r"accuracy-invalid ($K_{\delta}(G')\!\approx\!0$)",
+        label=r"audited accuracy-invalid ($K_{\delta}(G')\!=\!0$ at $0.25$)",
     )
     ax.axvline(invalid_from, color="#E69F00", linestyle="--", linewidth=1.0, alpha=0.8, zorder=1)
     for dataset in DATASET_ORDER:
@@ -300,7 +301,8 @@ def fig7_relative_dose_response(root: Path, output_dir: Path, dpi: int) -> None:
     if not csv_path.exists():
         csv_path = root / "outputs/paper_figures/fig7_relative_dose_response.csv"
     frame = pd.read_csv(csv_path)
-    invalid_from = 0.05
+    # Only strength 0.25 is accuracy-audited with K_δ(G')=0; do not shade 0.05/0.10.
+    invalid_from = 0.25
 
     fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.2), sharex=True)
     xmax = float(frame["strength"].max()) + 0.02
@@ -329,7 +331,7 @@ def fig7_relative_dose_response(root: Path, output_dir: Path, dpi: int) -> None:
     axes[0].text(
         0.98,
         0.95,
-        r"$K_{\delta}(G')\approx 0$",
+        r"$K_{\delta}(G')=0$ at $0.25$",
         transform=axes[0].transAxes,
         ha="right",
         va="top",
@@ -337,7 +339,10 @@ def fig7_relative_dose_response(root: Path, output_dir: Path, dpi: int) -> None:
         fontsize=8,
     )
     axes[0].legend(frameon=False, loc="upper left")
-    fig.suptitle("Random-rewiring dose response (shaded: accuracy-invalid)", y=1.02)
+    fig.suptitle(
+        r"Random-rewiring dose response (shaded: audited $K_{\delta}=0$ at strength $0.25$)",
+        y=1.02,
+    )
     fig.tight_layout()
     save_fig(fig, output_dir, "fig7_relative_dose_response", dpi)
 
@@ -550,7 +555,7 @@ def fig4_explanation_stability(root: Path, output_dir: Path, dpi: int) -> None:
         nodes["top_k_jaccard_mean"],
         s=28,
         c=np.log1p(nodes["degree"]),
-        cmap="cividis",
+        cmap="viridis",
         edgecolor="white",
         linewidth=0.3,
     )

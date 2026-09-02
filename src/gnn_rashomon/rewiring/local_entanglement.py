@@ -53,16 +53,23 @@ def select_treatment_control_nodes(
     tau: float,
     seed: int,
     min_degree: int = 2,
+    direction: str = "increase",
 ) -> tuple[np.ndarray, np.ndarray]:
+    if direction not in {"increase", "decrease"}:
+        raise ValueError(f"Unknown direction: {direction!r}")
     rng = np.random.default_rng(seed)
     degree = degree_sequence(edge_index, num_nodes)
     entropy = neighborhood_label_entropy(edge_index, labels, num_nodes, num_classes)
     max_entropy = float(np.log(num_classes))
-    eligible = np.flatnonzero((degree >= min_degree) & (entropy <= max_entropy - tau))
+    if direction == "increase":
+        eligible = np.flatnonzero((degree >= min_degree) & (entropy <= max_entropy - tau))
+    else:
+        eligible = np.flatnonzero((degree >= min_degree) & (entropy >= tau))
     if eligible.size == 0:
         raise ValueError("No eligible treatment nodes have enough entropy headroom.")
 
-    ordered = eligible[np.argsort(entropy[eligible], kind="stable")]
+    sort_key = entropy[eligible] if direction == "increase" else -entropy[eligible]
+    ordered = eligible[np.argsort(sort_key, kind="stable")]
     if ordered.size > treatment_count:
         pool = ordered[: max(treatment_count * 4, treatment_count)]
         treatment = np.sort(rng.choice(pool, size=treatment_count, replace=False))
@@ -102,8 +109,12 @@ def local_entanglement_rewire_graph(
     max_attempts: int,
     treatment_count: int,
     min_degree: int = 2,
+    direction: str = "increase",
 ) -> RewiringResult:
     import torch
+
+    if direction not in {"increase", "decrease"}:
+        raise ValueError(f"Unknown direction: {direction!r}")
 
     rng = random.Random(seed)
     original_data = graph.data
@@ -126,6 +137,7 @@ def local_entanglement_rewire_graph(
         tau=tau,
         seed=seed,
         min_degree=min_degree,
+        direction=direction,
     )
     original_treatment_entropy = _entropy_for_nodes(
         current_edges,
@@ -141,7 +153,12 @@ def local_entanglement_rewire_graph(
     accepted = 0
 
     for _ in range(max_attempts):
-        if current_treatment_mean - original_treatment_mean >= tau:
+        progress = (
+            current_treatment_mean - original_treatment_mean
+            if direction == "increase"
+            else original_treatment_mean - current_treatment_mean
+        )
+        if progress >= tau:
             break
         (a, b), (c, d) = rng.sample(edge_list, 2)
         if len({a, b, c, d}) < 4:
@@ -160,8 +177,12 @@ def local_entanglement_rewire_graph(
 
         treatment_entropy = _entropy_for_nodes(candidate_edges, labels, treatment, num_classes)
         treatment_mean = float(treatment_entropy.mean())
-        if treatment_mean <= current_treatment_mean:
-            continue
+        if direction == "increase":
+            if treatment_mean <= current_treatment_mean:
+                continue
+        else:
+            if treatment_mean >= current_treatment_mean:
+                continue
 
         control_entropy = _entropy_for_nodes(candidate_edges, labels, control, num_classes)
         if float(np.max(np.abs(control_entropy - original_control_entropy))) > delta_e:
@@ -193,6 +214,8 @@ def local_entanglement_rewire_graph(
         original_sensitive_attributes=graph.sensitive_attributes,
         rewired_sensitive_attributes=graph.sensitive_attributes,
     )
+    mode_name = "local_entanglement" if direction == "increase" else "local_entanglement_decrease"
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
         {
@@ -200,7 +223,8 @@ def local_entanglement_rewire_graph(
             "metadata": graph.metadata,
             "sensitive_attributes": graph.sensitive_attributes,
             "rewiring": {
-                "mode": "local_entanglement",
+                "mode": mode_name,
+                "direction": direction,
                 "tau": tau,
                 "delta_e": delta_e,
                 "max_feature_drift": max_feature_drift,
@@ -219,10 +243,16 @@ def local_entanglement_rewire_graph(
         output_path,
     )
 
+    final_progress = (
+        final_treatment_mean - original_treatment_mean
+        if direction == "increase"
+        else original_treatment_mean - final_treatment_mean
+    )
+
     result = RewiringResult(
         original_graph_hash=stable_hash(original_edge_index),
         rewired_graph_path=str(output_path),
-        mode="local_entanglement",
+        mode=mode_name,
         attempted_swaps=max_attempts,
         accepted_swaps=accepted,
         original_homophily=global_homophily(original_edge_index, labels),
@@ -239,9 +269,10 @@ def local_entanglement_rewire_graph(
         node_order_preserved=invariants.node_order_preserved,
         target_homophily=None,
         tolerance=None,
-        target_reached=final_treatment_mean - original_treatment_mean >= tau,
+        target_reached=final_progress >= tau,
         tau=tau,
         delta_e=delta_e,
+        direction=direction,
         treatment_count=int(len(treatment)),
         control_count=int(len(control)),
         treatment_nodes=treatment.tolist(),

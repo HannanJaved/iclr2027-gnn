@@ -34,6 +34,7 @@ class RewiringResult:
     node_order_preserved: bool = True
     tau: float | None = None
     delta_e: float | None = None
+    direction: str | None = None
     treatment_count: int | None = None
     control_count: int | None = None
     treatment_nodes: list[int] | None = None
