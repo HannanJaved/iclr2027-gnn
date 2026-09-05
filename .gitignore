@@ -1,3 +1,6 @@
+# Cluster launchers (absolute workstation paths / usernames). Not part of this release.
+scripts/slurm/
+
 __pycache__/
 *.py[cod]
 .venv/

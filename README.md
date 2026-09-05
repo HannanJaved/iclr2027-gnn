@@ -50,8 +50,8 @@ python scripts/paper_figures/generate_paper_figures.py
 
 - `src/gnn_rashomon/` — library and CLIs
 - `configs/` — experiment configs
-- `scripts/` — local helper scripts (e.g., paper figures)
-- `docs/` — experiment notes used during development
+- `scripts/` — local helper scripts (e.g., paper figures). Cluster Slurm launchers are not included.
+- `docs/` — historical development notes
 - `tests/` — unit / regression tests
 - `outputs/` — empty placeholders for local runs
 
